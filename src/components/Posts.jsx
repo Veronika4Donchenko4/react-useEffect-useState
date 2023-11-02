@@ -1,24 +1,39 @@
 import { useEffect, useState } from 'react';
 import Post from './Post';
 
+const API_URL = 'https://jsonplaceholder.typicode.com/posts';
+
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then((res) => res.json())
-      .then((posts) => {
+    async function fetchData() {
+      try {
+        const res = await fetch(API_URL);
+        const posts = await res.json();
         setPosts(posts);
-      })
-      .catch((error) => setError
-      (error.message))
-      .finally(() => setIsLoading(false))
-  }, [])
+      } catch (error) {
+        setError(error.message);
+      }
+      setIsLoading(false);
+    }
+    fetchData();
+  }, []);
 
-  if(error) {
-    return <h1>Error: {error}</h1>
+  // useEffect(() => {
+  //   fetch(API_URL)
+  //     .then((res) => res.json())
+  //     .then((posts) => {
+  //       setPosts(posts);
+  //     })
+  //     .catch((error) => setError(error.message))
+  //     .finally(() => setIsLoading(false));
+  // }, []);
+
+  if (error) {
+    return <h1>Error: {error}</h1>;
   }
 
   return (
@@ -28,8 +43,8 @@ const Posts = () => {
       {isLoading ? (
         <h1>Loading...</h1>
       ) : (
-      posts.map((post) => <Post key={post.id} {...post} />
-      ))}
+        posts.map((post) => <Post key={post.id} {...post} />)
+      )}
     </div>
   );
 };
