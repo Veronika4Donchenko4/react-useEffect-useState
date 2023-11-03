@@ -9,7 +9,7 @@ const Posts = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchData() {
+    (async function () {
       try {
         const res = await fetch(API_URL);
         const posts = await res.json();
@@ -18,8 +18,7 @@ const Posts = () => {
         setError(error.message);
       }
       setIsLoading(false);
-    }
-    fetchData();
+    })();
   }, []);
 
   // useEffect(() => {
