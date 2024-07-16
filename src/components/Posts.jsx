@@ -23,20 +23,20 @@ const Posts = () => {
 
   // useEffect(() => {
   //   fetch(API_URL)
-  //     .then((res) => res.json())
+  // .then((res) => res.json())
   //     .then((posts) => {
   //       setPosts(posts);
   //     })
   //     .catch((error) => setError(error.message))
   //     .finally(() => setIsLoading(false));
-  // }, []);
+  // }, []);`
 
   if (error) {
     return <h1>Error: {error}</h1>;
   }
 
   return (
-    <div>
+    <>
       <h1>Posts</h1>
       <hr />
       {isLoading ? (
@@ -44,7 +44,7 @@ const Posts = () => {
       ) : (
         posts.map((post) => <Post key={post.id} {...post} />)
       )}
-    </div>
+    </>
   );
 };
 
